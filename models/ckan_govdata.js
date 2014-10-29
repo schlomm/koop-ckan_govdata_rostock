@@ -64,7 +64,7 @@ var ckan_govdata = function( koop ){
                 item_url;
               if ( result ){
                 for (var i = 0; i < result.resources.length; i++){
-                  if (result.resources[i].format == 'CSV'){
+                  if (result.resources[i].format == 'csv'){
                     item_url = result.resources[i].url;
                   }
                 }
