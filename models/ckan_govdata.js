@@ -28,8 +28,8 @@ var ckan_govdata = function( koop ){
     koop.Cache.db.serviceGet( 'ckan_govdata:services', parseInt(id) || id, callback);
   };
 
-  ckan_govdata.ckan_path = '/ckan/api/rest/dataset/';
-  ckan_govdata.ckan_list_path = '/ckan/api/rest/dataset/';
+  ckan_govdata.ckan_path = '/ckan/api/3/action/package_show';
+  ckan_govdata.ckan_list_path = '/ckan/api/3/action/package_list?-d';
 
   ckan_govdata.getAll = function( host, options, callback ){
     var self = this;
@@ -40,7 +40,7 @@ var ckan_govdata = function( koop ){
       if (err) {
         callback(err, null);
       } else {
-        result = JSON.parse(response);
+        result = JSON.parse(response).result;
         callback( null, result );
       }
     });
@@ -54,17 +54,17 @@ var ckan_govdata = function( koop ){
 
     koop.Cache.get( type, key, options, function(err, entry ){
       if ( err ){
-        var url = host + self.ckan_path + id;
+        var url = host + self.ckan_path + '?id='+ id;
         request.get(url, function(err, data, response ){
           if (err) {
             callback(err, null);
           } else {
             try {
-              var result = JSON.parse(response),
+              var result = JSON.parse(response).result,
                 item_url;
               if ( result ){
                 for (var i = 0; i < result.resources.length; i++){
-                  if (result.resources[i].format == 'csv'){
+                  if (result.resources[i].format == 'CSV'){
                     item_url = result.resources[i].url;
                   }
                 }
@@ -150,4 +150,3 @@ var ckan_govdata = function( koop ){
   
 
 module.exports = ckan_govdata;
-  
