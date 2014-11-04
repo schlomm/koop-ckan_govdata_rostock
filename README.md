@@ -1,40 +1,41 @@
-## CKAN Provider for [Koop](https://github.com/Esri/koop)
+## CKAN-govdata Provider for [Koop](https://github.com/Esri/koop)
 -----------
 
-This provider makes it possible to access [ckan's JSON API]() as either GeoJSON or an Esri FeatureService. This is particular useful for making maps and doing analysis on the web.
+This provider makes it possible to access [govdata's ckan JSON API](https://www.govdata.de/metadatenschema) as either GeoJSON or an Esri FeatureService. This is particular useful for making maps and doing analysis on the web.
 
 ## Installation
-
 To install/use this provider you first need a working installation of [Koop](https://github.com/Esri/koop). Then from within the koop directory you'll need to run the following:
+ `npm install https://github.com/schlomm/koop-ckan_govdata/tarball/master`
 
-  ```
-    npm install https://github.com/chelm/koop-ckan/tarball/master
-  ```
 
-## Register CKAN Hosts
+## Use govdata CKAN API
+Because govdata's CKAN API does not follow some  'standards' of other ckan portals, this koop-provider is only an adapted one for the specific properties of govdata's structure. You do not need to register any host or instance like it is possible/needed in the overal [koop-ckan](https://github.com/chelm/koop-ckan). Once this provider's been installed you are ready for takeoff.
+What you'll need for that request to work is a dataset ID and a the URL of the ckan instance. The ID is what you'll use to reference datasets that come from ckan in Koop. 
+To make sure this works you can visit: http://localhost/ckan-govdata and you should see the govdata.de host as a listed item.
 
-Once this provider's been installed you need to "register" an instance of CKAN with your Koop instance. To do this you make `POST` request to the `/ckan` endpoint like so: 
-
-  ```
-    curl --data "host=https://catalog.data.gov&id=datagov" localhost:1337/ckan
-  ```
-
-What you'll need for that request to work is an ID and a the URL of the ckan instance. The ID is what you'll use to reference datasets that come from ckan in Koop. 
-
-To make sure this works you can visit: http://localhost:1337/ckan and you should see all of the register hosts. 
-
-## Access CKAN Data
-
-To access a dataset hosted in CKAN you'll need a "dataset id" from CKAN which could be referenced in Koop like so: 
-
-[http://koop.dc.esri.com/ckan/rwlabs/ourairports-ind](http://koop.dc.esri.com/ckan/rwlabs/ourairports-ind)
+## Access Govdata-CKAN Data
+To get a list of all datasets on govdata.de, you can use the this URL.
+`localhost/ckan_govdata/govdata/<id>`
+To access a dataset hosted on govdata's, you'll need a "dataset id" from govdata's CKAN endpoint, which could be referenced in Koop like so: 
+`localhost/ckan_govdata/govdata/<id>`
 
 
 ## Examples 
+Here's a few examples of data hosted in ckan and accessed via Koop: 
 
-Here's a few examples of data hosted in ckan and accessed via Koop
+* GeoJSON: localhost/ckan_govdata/govdata/oberbuergermeisterwahl_2012-hro-hro
+* FeatureService: localhost/ckan_govdata/govdata/oberbuergermeisterwahl_2012-hro-hro/FeatureService
 
-* GeoJSON [http://koop.dc.esri.com/ckan/rwlabs/ourairports-ind](http://koop.dc.esri.com/ckan/rwlabs/ourairports-ind)
-* FeatureService [http://koop.dc.esri.com/ckan/rwlabs/ourairports-ind/FeatureServer/0]
-* KML [http://koop.dc.esri.com/ckan/rwlabs/ourairports-ind.kml]
-* All of the publicly registered ckan instances [http://koop.dc.esri.com/ckan](http://koop.dc.esri.com/ckan)
+Please note that most of govdata's datasets are not well formated and that those does not follow necessary standards. Especially the needed .csv-files do not work in the most cases, because of a wrong formats, which results in parsing errors for koop. Although the above mentioned example is useable, you are not able to make a Preview from it, because the needed geometries porperties are put in the wrong array. 
+
+#### Differences between [koop-ckan_govdata](https://github.com/schlomm/koop-ckan_govdata) and [koop-ckan](https://github.com/chelm/koop-ckan) 
+
+ - URL to CKAN Endpoint was changed (check koop-ckan_govdata / models / ckan_govdata.js)
+ - Fixed error for csv parsing
+ - Routing
+ - Registering
+
+## Credits
+[koop-ckan_govdata](https://github.com/schlomm/koop-ckan_govdata) is a fork from [koop-ckan](https://github.com/chelm/koop-ckan) with some edits to allow querying govdata.de.  Thanks to @chelm for this nice piece of software.  
+
+
