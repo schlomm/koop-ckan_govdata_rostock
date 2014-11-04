@@ -9,14 +9,14 @@ To install/use this provider you first need a working installation of [Koop](htt
 
 
 ## Use govdata CKAN API
-Because govdata's CKAN API does not follow some  'standards' of other ckan portals, this koop-provider is only an adapted one for the specific properties of govdata's structure. You do not need to register any host or instance like it is possible/needed in the overal [koop-ckan](https://github.com/chelm/koop-ckan). Once this provider's been installed you are ready for takeoff.
-What you'll need for that request to work is a dataset ID and a the URL of the ckan instance. The ID is what you'll use to reference datasets that come from ckan in Koop. 
+Because govdata's CKAN API does not follow some  'standards' of other ckan portals, this koop-provider is only an adapted one for the specific properties of govdata's structure. You do not need to register any host or instance like it is possible/needed in the overal [koop-ckan](https://github.com/chelm/koop-ckan). Once this provider's been installed you are ready for takeoff.  
+What you'll need for that request to work is a dataset ID and a the URL of the ckan instance. The ID is what you'll use to reference datasets that come from ckan in Koop.   
 To make sure this works you can visit: http://localhost/ckan-govdata and you should see the govdata.de host as a listed item.
 
 ## Access Govdata-CKAN Data
-To get a list of all datasets on govdata.de, you can use the this URL.
-`localhost/ckan_govdata/govdata/<id>`
-To access a dataset hosted on govdata's, you'll need a "dataset id" from govdata's CKAN endpoint, which could be referenced in Koop like so: 
+To get a list of all datasets on govdata.de, you can use the this URL:  
+`localhost/ckan_govdata/govdata/<id>`  
+To access a dataset hosted on govdata's, you'll need a "dataset id" from govdata's CKAN endpoint, which could be referenced in Koop like so:   
 `localhost/ckan_govdata/govdata/<id>`
 
 
