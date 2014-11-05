@@ -43,6 +43,15 @@ Please note that most of govdata's datasets are not well formated and that those
  - Fixed error for csv parsing
  - Routing
  - Registering
+  
+###### Some links, which could be important for further work:
+Govdata Links:
+
+ - `https://www.govdata.de/ckan/api/3/action/package_list?-d` -> A list of all available pakages.
+ - `https://www.govdata.de/ckan/api/3/action/package_show?id=blablabla` 
+ - `https://www.govdata.de/ckan/api/3/action/package_search or /api/3/action/package_search?q=blablbala`
+ - `https://www.govdata.de/ckan/api/action/package_show?id=9c406e08-a5bc-4e15-ae07-5d942a64c731`
+ - `https://www.govdata.de/ckan/api/rest/dataset/oberbuergermeisterwahl_2012-hro-hro`
 
 ## Credits
 [koop-ckan_govdata](https://github.com/schlomm/koop-ckan_govdata) is a fork from [koop-ckan](https://github.com/chelm/koop-ckan) with some edits to allow querying govdata.de.  Thanks to @chelm for this nice piece of software.  
