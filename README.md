@@ -6,7 +6,16 @@ This provider makes it possible to access [govdata's ckan JSON API](https://www.
 ## Installation
 To install/use this provider you first need a working installation of [Koop](https://github.com/Esri/koop). Then from within the koop directory you'll need to run the following:
  `npm install https://github.com/schlomm/koop-ckan_govdata/tarball/master`
-
+### Installation
+Perform the following steps to install the dwd-koop provider. Install [koop](https://github.com/Esri/koop) including its dependencies for a working and needed environment. 
+Clone the repo  
+`git clone git@github.com:Esri/koop.git`  
+Enter the koop project directory  
+`cd koop`  
+Install koop-server and node.js dependencies  
+`npm install`  
+Install koop-ckan_govdata with the koop-dir via  
+`npm install https://github.com/schlomm/koop-ckan_govdata/tarball/master` 
 
 ## Use govdata CKAN API
 Because govdata's CKAN API does not follow some  'standards' of other ckan portals, this koop-provider is only an adapted one for the specific properties of govdata's structure. You do not need to register any host or instance like it is possible/needed in the overal [koop-ckan](https://github.com/chelm/koop-ckan). Once this provider's been installed you are ready for takeoff.  
@@ -15,22 +24,22 @@ To make sure this works you can visit: http://localhost/ckan-govdata and you sho
 
 ## Access Govdata-CKAN Data
 To get a list of all datasets on govdata.de, you can use the this URL:  
-`localhost/ckan_govdata/govdata/<id>`  
+`your_server:port/ckan_govdata/govdata/<id>`  
 To access a dataset hosted on govdata's, you'll need a "dataset id" from govdata's CKAN endpoint, which could be referenced in Koop like so:   
-`localhost/ckan_govdata/govdata/<id>`
+`your_server:port/ckan_govdata/govdata/<id>`
 
 
 ## Examples 
 Here's a few examples of data hosted in ckan and accessed via Koop: 
 
-* GeoJSON: localhost/ckan_govdata/govdata/oberbuergermeisterwahl_2012-hro-hro
-* FeatureService: localhost/ckan_govdata/govdata/oberbuergermeisterwahl_2012-hro-hro/FeatureService
+* `GeoJSON: your_server:port/ckan_govdata/govdata/oberbuergermeisterwahl_2012-hro-hro`
+* `FeatureService: your_server:port/ckan_govdata/govdata/oberbuergermeisterwahl_2012-hro-hro/FeatureService`
 
 Please note that most of govdata's datasets are not well formated and that those does not follow necessary standards. Especially the needed .csv-files do not work in the most cases, because of a wrong formats, which results in parsing errors for koop. Although the above mentioned example is useable, you are not able to make a Preview from it, because the needed geometries porperties are put in the wrong array. 
 
 #### Differences between [koop-ckan_govdata](https://github.com/schlomm/koop-ckan_govdata) and [koop-ckan](https://github.com/chelm/koop-ckan) 
 
- - URL to CKAN Endpoint was changed (check koop-ckan_govdata / models / ckan_govdata.js)
+ - URL to CKAN Endpoint was changed (check koop-ckan_govdata/models/ckan_govdata.js)
  - Fixed error for csv parsing
  - Routing
  - Registering
