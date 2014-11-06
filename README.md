@@ -28,7 +28,7 @@ To get a list of all datasets on govdata.de, you can use the this URL:
 To access a dataset hosted on govdata's, you'll need a "dataset id" from govdata's CKAN endpoint, which could be referenced in Koop like so:   
 `your_server:port/ckan_govdata/govdata/<id>`
 
-###### Used ckan-govdata schema:
+###### Used ckan-govdata schema and links which might be important.
 - https://www.govdata.de/ckan/api/action/package_list?-d        #### List all available datasets in the needed result-array, which is used [here](https://github.com/schlomm/koop-ckan_govdata/blob/master/models/ckan_govdata.js#L32).
 - https://www.govdata.de/ckan/api/action/package_show?id=glascontainer-hro-hro        #### Shows a dataset with all its metadata, which is used [here](https://github.com/schlomm/koop-ckan_govdata/blob/master/models/ckan_govdata.js#L31) for parsing the metatdata for available "csv"-files.
 - https://www.govdata.de/ckan/api/3/action/package_search?q=keyword
@@ -42,10 +42,17 @@ To access a dataset hosted on govdata's, you'll need a "dataset id" from govdata
 
 
 ## Examples 
-Here's a few examples of data hosted in ckan and accessed via Koop: 
+Here are a few example datasets of data hosted in govdata's ckan as csv and in the right format, which can be processed via Koop: 
 
-* `GeoJSON: your_server:port/ckan_govdata/govdata/oberbuergermeisterwahl_2012-hro-hro`
-* `FeatureService: your_server:port/ckan_govdata/govdata/oberbuergermeisterwahl_2012-hro-hro/FeatureService`
+* oberbuergermeisterwahl_2012-hro-hro
+* oberbuergermeisterwahl_2012-hro-hro
+* simple_search_wwwberlindetestboaltglascontainer
+* bremen236_c_4419_de
+* friedhoefe-hro-hro
+* poststellen-hro-hro
+* reisebusparkplaetze-hro-hro
+* reisebusterminals-hro-hro
+
 
 Please note that most of govdata's datasets are not well formated and that those does not follow necessary standards. Especially the needed .csv-files do not work in the most cases, because of a wrong formats, which results in parsing errors for koop. Although the above mentioned example is useable, you are not able to make a Preview from it, because the needed geometries porperties are put in the wrong array. 
 
@@ -56,14 +63,6 @@ Please note that most of govdata's datasets are not well formated and that those
  - Routing
  - Registering
   
-###### Some links, which could be important for further work:
-Govdata Links:
-
- - `https://www.govdata.de/ckan/api/3/action/package_list?-d` -> A list of all available pakages.
- - `https://www.govdata.de/ckan/api/3/action/package_show?id=blablabla` 
- - `https://www.govdata.de/ckan/api/3/action/package_search or /api/3/action/package_search?q=blablbala`
- - `https://www.govdata.de/ckan/api/action/package_show?id=9c406e08-a5bc-4e15-ae07-5d942a64c731`
- - `https://www.govdata.de/ckan/api/rest/dataset/oberbuergermeisterwahl_2012-hro-hro`
 
 ## Credits
 [koop-ckan_govdata](https://github.com/schlomm/koop-ckan_govdata) is a fork from [koop-ckan](https://github.com/chelm/koop-ckan) with some edits to allow querying govdata.de.  Thanks to @chelm for this nice piece of software.  
