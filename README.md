@@ -7,15 +7,11 @@ This provider makes it possible to access [govdata's ckan JSON API](https://www.
 To install/use this provider you first need a working installation of [Koop](https://github.com/Esri/koop). Then from within the koop directory you'll need to run the following:
  `npm install https://github.com/schlomm/koop-ckan_govdata/tarball/master`
 ### Installation
-Perform the following steps to install the dwd-koop provider. Install [koop](https://github.com/Esri/koop) including its dependencies for a working and needed environment. 
-Clone the repo  
-`git clone git@github.com:Esri/koop.git`  
-Enter the koop project directory  
-`cd koop`  
-Install koop-server and node.js dependencies  
-`npm install`  
-Install koop-ckan_govdata with the koop-dir via  
-`npm install https://github.com/schlomm/koop-ckan_govdata/tarball/master` 
+1. Perform the following steps to install the dwd-koop provider. Install [koop](https://github.com/Esri/koop) including its dependencies for a working and needed environment. 
+2. Be sure that koop is not running before running this.   
+3. Install koop-ckan govdata with the koop-dir via: `npm install https://github.com/schlomm/koop-ckan_govdata/tarball/master` 4. Start koop-server via `node server.js` or `nohup node server.js > output.log &`
+5. Register govdata-Portal for the ckan-govdata koop provider: `curl --data "host=http://www.govdata.de&id=govdata" localhost:1337/ckan_govdata`
+
 
 ## Use govdata CKAN API
 Because govdata's CKAN API does not follow some  'standards' of other ckan portals, this koop-provider is only an adapted one for the specific properties of govdata's structure. You do not need to register any host or instance like it is possible/needed in the overal [koop-ckan](https://github.com/chelm/koop-ckan). Once this provider's been installed you are ready for takeoff.  
