@@ -5,17 +5,17 @@ var sm = require('sphericalmercator'),
   crypto = require('crypto');
 
 // a function that is given an instance of Koop at init
-var Controller = function( ckan_govdata ){
+var Controller = function( ckan_govdata_rostock ){
 
   var controller = {};
   controller.__proto__ = BaseController(); 
 
-  // register a ckan_govdata instance 
+  // register a ckan_govdata_rostock instance 
   controller.register = function(req, res){
     if ( !req.body.host ){
       res.send('Must provide a host to register:', 500); 
     } else { 
-      ckan_govdata.register( req.body.id, req.body.host, function(err, id){
+      ckan_govdata_rostock.register( req.body.id, req.body.host, function(err, id){
         if (err) {
           res.send( err, 500);
         } else {
@@ -26,7 +26,7 @@ var Controller = function( ckan_govdata ){
   };
 
   controller.list = function(req, res){
-    ckan_govdata.find(null, function(err, data){
+    ckan_govdata_rostock.find(null, function(err, data){
       if (err) {
         res.send( err, 500);
       } else {
@@ -36,7 +36,7 @@ var Controller = function( ckan_govdata ){
   };
 
   controller.find = function(req, res){
-    ckan_govdata.find(req.params.id, function(err, data){
+    ckan_govdata_rostock.find(req.params.id, function(err, data){
       if (err) {
         res.send( err, 404);
       } else {
@@ -47,12 +47,12 @@ var Controller = function( ckan_govdata ){
 
   // drops the cache for an item
   controller.drop = function(req, res){
-    ckan_govdata.find(req.params.id, function(err, data){
+    ckan_govdata_rostock.find(req.params.id, function(err, data){
       if (err) {
         res.send( err, 500);
       } else {
         // Get the item 
-        ckan_govdata.dropItem( req.params.id, req.params.item, req.query, function(error, itemJson){
+        ckan_govdata_rostock.dropItem( req.params.id, req.params.item, req.query, function(error, itemJson){
           if (error) {
             res.send( error, 500);
           } else {
@@ -64,12 +64,12 @@ var Controller = function( ckan_govdata ){
   };
 
   controller.listall = function(req, res){
-    ckan_govdata.find(req.params.id, function(err, data){
+    ckan_govdata_rostock.find(req.params.id, function(err, data){
       if (err) {
         res.send( err, 500);
       } else {
         // Get the item 
-        ckan_govdata.getAll( data.host, req.query, function( error, list ){
+        ckan_govdata_rostock.getAll( data.host, req.query, function( error, list ){
           if (error) {
             res.send( error, 500 );
           } else {
@@ -81,26 +81,26 @@ var Controller = function( ckan_govdata ){
   };
 
   controller.findResource = function(req, res){
-    ckan_govdata.find(req.params.id, function(err, data){
+    ckan_govdata_rostock.find(req.params.id, function(err, data){
       if (err) {
         res.send( err, 500);
       } else {
         // Get the item 
-        ckan_govdata.getResource( data.host, req.params.item, req.query, function(error, itemJson){
+        ckan_govdata_rostock.getResource( data.host, req.params.item, req.query, function(error, itemJson){
           if (error) {
             res.send( error, 500);
           } else if ( req.params.format ) {
             // change geojson to json
             req.params.format = req.params.format.replace('geojson', 'json');
 
-            var dir = ['ckan_govdata', req.params.id, req.params.item ].join(':');
+            var dir = ['ckan_govdata_rostock', req.params.id, req.params.item ].join(':');
             // build the file key as an MD5 hash that's a join on the paams and look for the file 
             var toHash = JSON.stringify( req.params ) + JSON.stringify( req.query );
             var key = crypto.createHash('md5').update( toHash ).digest('hex');
 
             var path = ['files', dir].join('/');
             var fileName = key + '.' + req.params.format;
-            ckan_govdata.files.exists( path, fileName, function( exists, path ){
+            ckan_govdata_rostock.files.exists( path, fileName, function( exists, path ){
               if ( exists ){
                 if (path.substr(0, 4) == 'http'){
                   res.redirect( path );      
@@ -108,7 +108,7 @@ var Controller = function( ckan_govdata ){
                   res.sendfile( path );
                 }
               } else {
-                ckan_govdata.exportToFormat( req.params.format, dir, key, itemJson[0], {}, function(err, file){
+                ckan_govdata_rostock.exportToFormat( req.params.format, dir, key, itemJson[0], {}, function(err, file){
                   if (err){
                     res.send(err, 500);
                   } else {
@@ -129,7 +129,7 @@ var Controller = function( ckan_govdata ){
     if ( !req.params.id ){
       res.send( 'Must specify a service id', 500 );
     } else { 
-      ckan_govdata.remove(req.params.id, function(err, data){
+      ckan_govdata_rostock.remove(req.params.id, function(err, data){
         if (err) {
           res.send( err, 500);
         } else {
@@ -147,12 +147,12 @@ var Controller = function( ckan_govdata ){
       req.query[k] = req.body[k];
     }
 
-    ckan_govdata.find(req.params.id, function(err, data){
+    ckan_govdata_rostock.find(req.params.id, function(err, data){
       if (err) {
         res.send( err, 500);
       } else {
         // Get the item 
-        ckan_govdata.getResource( data.host, req.params.item, req.query, function(error, geojson){
+        ckan_govdata_rostock.getResource( data.host, req.params.item, req.query, function(error, geojson){
           if (error) {
             res.send( error, 500);
           } else {
@@ -179,7 +179,7 @@ var Controller = function( ckan_govdata ){
         if (req.query.style){
           req.params.style = req.query.style;
         }
-        ckan_govdata.tileGet( req.params, data[ layer ], function(err, tile){
+        ckan_govdata_rostock.tileGet( req.params, data[ layer ], function(err, tile){
           if ( req.params.format == 'png' || req.params.format == 'pbf'){
             res.sendfile( tile );
           } else {
@@ -221,8 +221,8 @@ var Controller = function( ckan_govdata ){
       }
     };
 
-    var key = ['ckan_govdata', req.params.id, req.params.item].join(':');
-    var file = ckan_govdata.files.localDir + '/tiles/';
+    var key = ['ckan_govdata_rostock', req.params.id, req.params.item].join(':');
+    var file = ckan_govdata_rostock.files.localDir + '/tiles/';
       file += key + '/' + req.params.format;
       file += '/' + req.params.z + '/' + req.params.x + '/' + req.params.y + '.' + req.params.format;
 
@@ -232,12 +232,12 @@ var Controller = function( ckan_govdata ){
     if (fs.existsSync(jsonFile) && !fs.existsSync( file ) ){
       _send( null, fs.readFileSync( jsonFile ) );
     } else if ( !fs.existsSync( file ) ) {
-      ckan_govdata.find(req.params.id, function(err, data){
+      ckan_govdata_rostock.find(req.params.id, function(err, data){
         if (err) {
           res.send( err, 500);
         } else {
           // Get the item 
-          ckan_govdata.getResource( data.host, req.params.item, req.query, _send );
+          ckan_govdata_rostock.getResource( data.host, req.params.item, req.query, _send );
         }
       });
     } else {
@@ -250,30 +250,30 @@ var Controller = function( ckan_govdata ){
   controller.thumbnail = function(req, res){
 
     // check the image first and return if exists
-    var key = ['ckan_govdata', req.params.id, req.params.item].join(':');
-    var dir = ckan_govdata.files.localDir + '/thumbs/';
+    var key = ['ckan_govdata_rostock', req.params.id, req.params.item].join(':');
+    var dir = ckan_govdata_rostock.files.localDir + '/thumbs/';
     req.query.width = parseInt( req.query.width ) || 150;
     req.query.height = parseInt( req.query.height ) || 150;
     req.query.f_base = dir + key + '/' + req.query.width + '::' + req.query.height;
 
-    var fileName = ckan_govdata.thumbnailExists(key, req.query);
+    var fileName = ckan_govdata_rostock.thumbnailExists(key, req.query);
     if ( fileName ){
       res.sendfile( fileName );
     } else {
 
-      ckan_govdata.find(req.params.id, function(err, data){
+      ckan_govdata_rostock.find(req.params.id, function(err, data){
         if (err) {
           res.send( err, 500);
         } else {
           // Get the item 
-          ckan_govdata.getResource( data.host, req.params.item, req.query, function(error, itemJson){
+          ckan_govdata_rostock.getResource( data.host, req.params.item, req.query, function(error, itemJson){
             if (error) {
               res.send( error, 500);
             } else {
-              var key = ['ckan_govdata', req.params.id, req.params.item].join(':');
+              var key = ['ckan_govdata_rostock', req.params.id, req.params.item].join(':');
 
               // generate a thumbnail
-              ckan_govdata.thumbnailExists( itemJson[0], key, req.query, function(err, file){
+              ckan_govdata_rostock.thumbnailExists( itemJson[0], key, req.query, function(err, file){
                 if (err){
                   res.send(err, 500);
                 } else {

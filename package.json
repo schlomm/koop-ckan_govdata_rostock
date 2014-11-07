@@ -1,7 +1,7 @@
 {
-  "name": "koop-ckan_govdata",
+  "name": "koop-ckan_govdata_rostock",
   "version": "0.0.1",
-  "description": "A ckan_govdata wrapper for koop",
+  "description": "A ckan wrapper for koop for govdata.de and opendata-hro.de.",
   "main": "index.js",
   "directories": {
     "test": "test"

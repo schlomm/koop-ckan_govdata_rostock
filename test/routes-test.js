@@ -18,7 +18,7 @@ describe('Koop Routes', function(){
 
     before(function(done){
       request(koop)
-          .post('/socrata')
+          .post('/ckan_govdata_rostock')
           .set('Content-Type', 'application/json')
           .send({ 
             'host': 'https://data.cityofchicago.org', 
@@ -32,7 +32,7 @@ describe('Koop Routes', function(){
 
     after(function(done){
       request(koop)
-          .del('/socrata/tester')
+          .del('/ckan_govdata_rostock/tester')
           .end(function(err, res){
             //res.should.have.status(200);
             done();
@@ -40,10 +40,10 @@ describe('Koop Routes', function(){
     });
 
 
-    describe('/socrata routes', function() {
+    describe('/ckan_govdata_rostock routes', function() {
       it('register should return 500 when POSTing w/o a host', function(done) {
         request(koop)
-          .post('/socrata')
+          .post('/ckan_govdata_rostock')
           .end(function(err, res){
             res.should.have.status(500);
             done();
@@ -52,7 +52,7 @@ describe('Koop Routes', function(){
 
       it('should return 200 when GETing all registered providers', function(done) {
           request(koop)
-            .get('/socrata')
+            .get('/ckan_govdata_rostock')
             .end(function(err, res){
               res.should.have.status( 200 );
               done();
@@ -61,7 +61,7 @@ describe('Koop Routes', function(){
 
       it('should return 200 when GETing a registered provider', function(done) {
           request(koop)
-            .get('/socrata/tester')
+            .get('/ckan_govdata_rostock/tester')
             .end(function(err, res){
               res.should.have.status( 200 );
               done();
@@ -70,7 +70,7 @@ describe('Koop Routes', function(){
 
       it('should return 404 when GETing an unknown provider/host', function(done) {
           request(koop)
-            .get('/socrata/bogus')
+            .get('/ckan_govdata_rostock/bogus')
             .end(function(err, res){
               res.should.have.status( 404 );
               done();
@@ -79,7 +79,7 @@ describe('Koop Routes', function(){
 
       it('should return 200 when accessing item data', function(done) {
           request(koop)
-            .get('/socrata/tester/' + resource )
+            .get('/ckan_govdata_rostock/tester/' + resource )
             .end(function(err, res){
               res.should.have.status( 200 );
               should.not.exist(err);
@@ -89,7 +89,7 @@ describe('Koop Routes', function(){
 
       it('should return 200 when accessing item as a featureservice', function(done) {
           request(koop)
-            .get('/socrata/tester/' + resource + '/FeatureServer')
+            .get('/ckan_govdata_rostock/tester/' + resource + '/FeatureServer')
             .end(function(err, res){
               res.should.have.status( 200 );
               should.not.exist(err);
@@ -99,7 +99,7 @@ describe('Koop Routes', function(){
 
       it('should return 200 when accessing item as a featureservice layer', function(done) {
           request(koop)
-            .get('/socrata/tester/' + resource + '/FeatureServer/0')
+            .get('/ckan_govdata_rostock/tester/' + resource + '/FeatureServer/0')
             .end(function(err, res){
               res.should.have.status( 200 );
               should.not.exist(err);
@@ -109,7 +109,7 @@ describe('Koop Routes', function(){
 
       it('should return 200 when accessing item as a featureservice query', function(done) {
           request(koop)
-            .get('/socrata/tester/' + resource + '/FeatureServer/0/query')
+            .get('/ckan_govdata_rostock/tester/' + resource + '/FeatureServer/0/query')
             .end(function(err, res){
               res.should.have.status( 200 );
               should.not.exist(err);

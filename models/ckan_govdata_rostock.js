@@ -2,15 +2,15 @@ var request = require('request'),
   csv = require('csv'),
   BaseModel = require('koop-server/lib/BaseModel.js');
 
-var ckan_govdata = function( koop ){
+var ckan_govdata_rostock = function( koop ){
 
-  var ckan_govdata = {};
-  ckan_govdata.__proto__ = BaseModel( koop );
+  var ckan_govdata_rostock = {};
+  ckan_govdata_rostock.__proto__ = BaseModel( koop );
 
   // adds a service to the koop.Cache.db
   // needs a host, generates an id 
-  ckan_govdata.register = function( id, host, callback ){
-    var type = 'ckan_govdata:services';
+  ckan_govdata_rostock.register = function( id, host, callback ){
+    var type = 'ckan_govdata_rostock:services';
     koop.Cache.db.serviceCount( type, function(error, count){
       id = id || count++;
       koop.Cache.db.serviceRegister( type, {'id': id, 'host': host},  function( err, success ){
@@ -19,23 +19,32 @@ var ckan_govdata = function( koop ){
     });
   };
 
-  ckan_govdata.remove = function( id, callback ){
-    koop.Cache.db.serviceRemove( 'ckan_govdata:services', parseInt(id) || id,  callback);
+  ckan_govdata_rostock.remove = function( id, callback ){
+    koop.Cache.db.serviceRemove( 'ckan_govdata_rostock:services', parseInt(id) || id,  callback);
   }; 
 
   // get service by id, no id == return all
-  ckan_govdata.find = function( id, callback ){
-    koop.Cache.db.serviceGet( 'ckan_govdata:services', parseInt(id) || id, callback);
+  ckan_govdata_rostock.find = function( id, callback ){
+    koop.Cache.db.serviceGet( 'ckan_govdata_rostock:services', parseInt(id) || id, callback);
   };
 
-  ckan_govdata.ckan_path = '/ckan/api/3/action/package_show';
-  ckan_govdata.ckan_list_path = '/ckan/api/3/action/package_list?-d';
+  
 
-  ckan_govdata.getAll = function( host, options, callback ){
-    var self = this;
+  ckan_govdata_rostock.getAll = function( host, options, callback ){
+
+   if (host == 'http://www.govdata.de') {
+       ckan_govdata_rostock.ckan_list_path = '/ckan/api/3/action/package_list?-d';
+       ckan_govdata_rostock.ckan_path = '/ckan/api/3/action/package_show';      
+    };
+   if (host == 'http://www.opendata-hro.de') {
+      ckan_govdata_rostock.ckan_list_path = '/api/3/action/package_list?-d';
+      ckan_govdata_rostock.ckan_path = '/api/3/action/package_show';
+    };
+
+  var self = this;
 
     var url = host + self.ckan_list_path,
-      result, links = [];
+    result, links = [];
     request.get(url, function(err, data, response ){
       if (err) {
         callback(err, null);
@@ -47,12 +56,12 @@ var ckan_govdata = function( koop ){
   };
 
   // got the service and get the item
-  ckan_govdata.getResource = function( host, id, options, callback ){
+  ckan_govdata_rostock.getResource = function( host, id, options, callback ){
     var self = this,
-      type = 'ckan_govdata',
+      type = 'ckan_govdata_rostock',
       key = [host,id].join('::'); 
 
-    koop.Cache.get( type, key, options, function(err, entry ){
+        koop.Cache.get( type, key, options, function(err, entry ){
       if ( err ){
         var url = host + self.ckan_path + '?id='+ id;
         request.get(url, function(err, data, response ){
@@ -64,7 +73,7 @@ var ckan_govdata = function( koop ){
                 item_url;
               if ( result ){
                 for (var i = 0; i < result.resources.length; i++){
-                  if (result.resources[i].format == 'csv'){
+                  if (result.resources[i].format == 'CSV' || result.resources[i].format == 'csv' ){
                     item_url = result.resources[i].url;
                   }
                 }
@@ -131,9 +140,9 @@ var ckan_govdata = function( koop ){
   };*/
 
    // drops the item from the cache
-  ckan_govdata.dropItem = function( host, itemId, options, callback ){
-    var dir = [ 'ckan_govdata', host, itemId].join(':');
-    koop.Cache.remove('ckan_govdata:'+host+':', itemId, options, function(err, res){
+  ckan_govdata_rostock.dropItem = function( host, itemId, options, callback ){
+    var dir = [ 'ckan_govdata_rostock', host, itemId].join(':');
+    koop.Cache.remove('ckan_govdata_rostock:'+host+':', itemId, options, function(err, res){
       koop.files.removeDir( 'files/' + dir, function(err, res){
         koop.files.removeDir( 'tiles/'+ dir, function(err, res){
           koop.files.removeDir( 'thumbs/'+ dir, function(err, res){
@@ -144,9 +153,9 @@ var ckan_govdata = function( koop ){
     });
   };
 
-  return ckan_govdata;
+  return ckan_govdata_rostock;
 
 };
   
 
-module.exports = ckan_govdata;
+module.exports = ckan_govdata_rostock;
