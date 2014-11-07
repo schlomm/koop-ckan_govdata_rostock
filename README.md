@@ -25,15 +25,18 @@ To access a dataset hosted on govdata's, you'll need a "dataset id" from govdata
 `your_server:port/ckan_govdata/govdata/<id>`
 
 ###### Used ckan-govdata schema and links which might be important.
-- https://www.govdata.de/ckan/api/action/package_list?-d        #### List all available datasets in the needed result-array, which is used [here](https://github.com/schlomm/koop-ckan_govdata/blob/master/models/ckan_govdata.js#L32).
-- https://www.govdata.de/ckan/api/action/package_show?id=glascontainer-hro-hro        #### Shows a dataset with all its metadata, which is used [here](https://github.com/schlomm/koop-ckan_govdata/blob/master/models/ckan_govdata.js#L31) for parsing the metatdata for available "csv"-files.
-- https://www.govdata.de/ckan/api/3/action/package_search?q=keyword
+- `https://www.govdata.de/ckan/api/action/package_list?-d` 
+	- List all available datasets in the needed result-array, which is used [here](https://github.com/schlomm/koop-ckan_govdata/blob/master/models/ckan_govdata.js#L32).
+- `https://www.govdata.de/ckan/api/action/package_show?id=glascontainer-hro-hro`
+	- Shows a dataset with all its metadata, which is used [here](https://github.com/schlomm/koop-ckan_govdata/blob/master/models/ckan_govdata.js#L31) for parsing the metatdata for available "csv"-files.
+- `https://www.govdata.de/ckan/api/3/action/package_search?q=keyword`
+	- Searches for a specific phrase within all datasets.
 - For more information, check the the official [CKAN API](http://docs.ckan.org/en/ckan-1.8.2/apiv3.html?highlight=package_list#parameters)
 
 ###### Standard ckan schema:
 - portalURL/api/3/action/package_list
--	portalURL/api/3/action/package_show?id=datasetID
--	portalURL/api/3/action/package_search?q=keyword
+- portalURL/api/3/action/package_show?id=datasetID
+- portalURL/api/3/action/package_search?q=keyword
 
 
 
@@ -61,6 +64,4 @@ Please note that most of govdata's datasets are not well formated and that those
   
 
 ## Credits
-[koop-ckan_govdata](https://github.com/schlomm/koop-ckan_govdata) is a fork from [koop-ckan](https://github.com/chelm/koop-ckan) with some edits to allow querying govdata.de.  Thanks to @chelm for this nice piece of software.  
-
-
+[koop-ckan_govdata](https://github.com/schlomm/koop-ckan_govdata) is a fork from [koop-ckan](https://github.com/chelm/koop-ckan) with some edits to allow querying govdata.de. Thanks to @chelm for this nice piece of software.  
