@@ -76,7 +76,7 @@ Although the above mentioned examples are useable, you are not able to make a Pr
 
 #### Differences between [koop-ckan_govdata](https://github.com/schlomm/koop-ckan_govdata) and [koop-ckan](https://github.com/chelm/koop-ckan) 
 
- - URL to CKAN Endpoint was changed (check koop-ckan_govdata/models/ckan_govdata_rostock.js)
+ - URL to CKAN Endpoint was changed (check koop-ckan_govdata_rostock/models/ckan_govdata_rostock.js). Depending on URL/host, the ckan_pathes will be changed.
  - Fixed error for csv parsing
  - Routing
  - Registering
